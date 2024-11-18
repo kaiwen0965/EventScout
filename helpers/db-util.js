@@ -1,12 +1,15 @@
 import { MongoClient } from "mongodb";
 
-let client;
-
-const connectionString = `mongodb+srv://${process.env.mongodb_username}:${process.env.mongodb_password}@${process.env.mongodb_clustername}.vlexy.mongodb.net/${process.env.mongodb_database}?retryWrites=true&w=majority`;
-
 export async function connectDatabase() {
-  client = await MongoClient.connect(connectionString);
+  let client;
 
+  const connectionString = `mongodb+srv://${process.env.mongodb_username}:${process.env.mongodb_password}@${process.env.mongodb_clustername}.vlexy.mongodb.net/${process.env.mongodb_database}?retryWrites=true&w=majority`;
+
+  try {
+    client = await MongoClient.connect(connectionString);
+  } catch (error) {
+    res.status(500).json({ message: "Could not connect to database." });
+  }
   return client;
 }
 
