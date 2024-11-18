@@ -1,5 +1,5 @@
 export async function getAllEvents() {
-  const connectionString = process.env.firebase;
+  const connectionString = process.env.FIREBASE;
   const respose = await fetch(connectionString);
   const data = await respose.json();
 
